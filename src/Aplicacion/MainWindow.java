@@ -167,12 +167,25 @@ public class MainWindow extends javax.swing.JFrame {
         double precio = 0.0;
         int puertas = 0;
         double cilindraje = 0.0;
+        String regexNumero = "^-?\\d+(\\.\\d+)?$";
         
+        // se almacena la seleccion del combobox
         String tipoAuto = (String) cboMarca.getSelectedItem();
         String tipoPago = (String) cboTipoPrecio.getSelectedItem();
         
+        if(txtMarca.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Error: El Campo De La Marca No Puede Estar Vacio", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(!(txtPrecio.getText().matches(regexNumero))){
+            JOptionPane.showMessageDialog(this, "Error: El Precio Debe Contener Numeros Enteros o Decimales", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         marca = txtMarca.getText();
         precio = Double.parseDouble(txtPrecio.getText());
+        
         
         if(tipoPago.equals("Credito")){
         if(tipoAuto.equals("Auto")){
@@ -181,6 +194,8 @@ public class MainWindow extends javax.swing.JFrame {
             
             Auto Auto1 = new Auto();
             Auto1.setMarca(marca);
+            Auto1.setPrecio(precio);
+            Auto1.setPuertas(puertas);
         }
         }
         else if(tipoPago.equals("Contado")){

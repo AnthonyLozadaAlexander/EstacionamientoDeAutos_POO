@@ -31,28 +31,43 @@ public class Auto extends VehiculoPadre {
         this.puertas = puertas;
     }
     
-    public void setPrecio(double precio){
-        if(precio > 0){
-            alerta(precio);
-        this.precio = precio;
-        }
-        else{
-            alerta(precio);
-            this.precio = 0;
-            return;
-        }
-    }
-    
-    public void alerta(double precio){
-        if(precio < 0){
-        JOptionPane.showMessageDialog(null,"Precio Ingresado Invalido: " + precio, "ERROR", JOptionPane.ERROR_MESSAGE);
-        }else{   
-            JOptionPane.showMessageDialog(null,"Precio Ingresado: " + precio, "Info", JOptionPane.INFORMATION_MESSAGE);
-        }
+    public boolean esPrecioValido(double precio){
+        return precio > 0;
     }
     
     public void setMarca(String marca){
         this.marca = marca;
     }
+    
+    public void setPrecio(double precio){
+        if(esPrecioValido(precio)){
+            JOptionPane.showMessageDialog(null, "Precio Ingresado: " + precio,"Informacion", JOptionPane.INFORMATION_MESSAGE);
+            this.precio = precio;
+        }
+        else{
+             JOptionPane.showMessageDialog(null, "Precio Ingresado Invalido: " + precio,"ERROR", JOptionPane.ERROR_MESSAGE);
+            this.precio = 0;
+            return;
+        }
+    }
+    
+    public double Subtotal(){
+        return precio;
+    }
+    
+    public double calcularIVA(){
+        return precio * IVA;
+    }
+    
+    public double calcularTotal(String tipoPago){
+        double total = Subtotal() + calcularIVA();
+        if(tipoPago.equals("Credito")){
+            total = total + 100;
+        }
+        
+        return total;
+        
+    }
+    
 
 }
