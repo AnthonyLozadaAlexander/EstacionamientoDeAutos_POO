@@ -169,8 +169,23 @@ public class MainWindow extends javax.swing.JFrame {
         double cilindraje = 0.0;
         
         String tipoAuto = (String) cboMarca.getSelectedItem();
+        String tipoPago = (String) cboTipoPrecio.getSelectedItem();
+        
         marca = txtMarca.getText();
         precio = Double.parseDouble(txtPrecio.getText());
+        
+        if(tipoPago.equals("Credito")){
+        if(tipoAuto.equals("Auto")){
+            // crear objeto
+            puertas = Integer.parseInt(txtPuertas.getText());
+            
+            Auto Auto1 = new Auto();
+            Auto1.setMarca(marca);
+        }
+        }
+        else if(tipoPago.equals("Contado")){
+            
+        }
         
         
     }//GEN-LAST:event_btnCalcularActionPerformed

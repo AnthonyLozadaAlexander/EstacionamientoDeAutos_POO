@@ -38,6 +38,8 @@ public class Auto extends VehiculoPadre {
         }
         else{
             alerta(precio);
+            this.precio = 0;
+            return;
         }
     }
     
