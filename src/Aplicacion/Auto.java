@@ -12,16 +12,15 @@ import javax.swing.JOptionPane;
  */
 public class Auto extends VehiculoPadre {
     private int puertas;
-    private String tipoPago;
     private final double IVA = 0.15;
     
     public Auto(){
         
     }
     
-    public Auto(int puertas){
-        this.puertas = puertas;
-    }
+    //public Auto(int puertas){
+        //this.puertas = puertas;
+    //}
     
     public Auto(String marca, double precio, int puertas){
         super(marca, precio);
@@ -36,9 +35,6 @@ public class Auto extends VehiculoPadre {
         return precio > 0;
     }
     
-    public void setTipoPago(String tipoPago){
-        this.tipoPago = tipoPago;
-    }
     
     public void setMarca(String marca){
         this.marca = marca;
@@ -49,11 +45,7 @@ public class Auto extends VehiculoPadre {
             JOptionPane.showMessageDialog(null, "Precio Ingresado: " + precio,"Informacion", JOptionPane.INFORMATION_MESSAGE);
             this.precio = precio;
         }
-        else{
-             JOptionPane.showMessageDialog(null, "Precio Ingresado Invalido: " + precio,"ERROR", JOptionPane.ERROR_MESSAGE);
-            this.precio = 0;
-            return;
-        }
+       
     }
     
     // Metodo para el SubTotal que por el momento es el precio ingresado.
@@ -69,22 +61,38 @@ public class Auto extends VehiculoPadre {
     public double calcularTotal(String tipoPago){
         double total = Subtotal() + calcularIVA();
         if(tipoPago.equals("Credito")){
+            JOptionPane.showMessageDialog(null, "Pago Realizado Por Credito Aumento De 100$");
             total = total + 100;
         }
+        
         
         return total;
         
     }
     
+    // Metodo Total sin la alerta
+     public double Total(String tipoPago){
+        double total = Subtotal() + calcularIVA();
+        if(tipoPago.equals("Credito")){
+      
+            total = total + 100;
+        }
+        
+        
+        return total;
+        
+    }
+    
+    
     public void CompraRealizada(){
         JOptionPane.showMessageDialog(null, "Gracias Por Su Compra", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
     
-    public String mostrarInfo(){
+    public String mostrarInfo(String tipoPago){
         
         CompraRealizada();
         
-        return "Marca: " + marca + "\nPrecio: " + precio + "\nPuertas: " + puertas + "\nSubTotal: " + Subtotal() + "\nTotal: " + calcularTotal(tipoPago);
+        return "\nMarca/Auto: " + marca + "\nPrecio: " + precio + "\nPuertas: " + puertas + "\nSubTotal: " + Subtotal() + "\nIVA: " + calcularIVA() + "\nTotal: " + Total(tipoPago) + "\n";
         
         
     } 
