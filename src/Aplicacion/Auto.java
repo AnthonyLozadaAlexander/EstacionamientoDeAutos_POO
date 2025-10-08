@@ -37,7 +37,7 @@ public class Auto extends VehiculoPadre {
     }
     
     public void setTipoPago(String tipoPago){
-        this.tipoPago = this.tipoPago;
+        this.tipoPago = tipoPago;
     }
     
     public void setMarca(String marca){

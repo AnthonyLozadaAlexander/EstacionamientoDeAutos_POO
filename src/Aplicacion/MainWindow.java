@@ -85,11 +85,31 @@ public class MainWindow extends javax.swing.JFrame {
         PanelTipos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 130, -1));
 
         cboTipoAuto.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
-        cboTipoAuto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Moto", " " }));
+        cboTipoAuto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Moto" }));
+        cboTipoAuto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cboTipoAutoItemStateChanged(evt);
+            }
+        });
+        cboTipoAuto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cboTipoAutoMouseClicked(evt);
+            }
+        });
+        cboTipoAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboTipoAutoActionPerformed(evt);
+            }
+        });
+        cboTipoAuto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cboTipoAutoKeyPressed(evt);
+            }
+        });
         PanelTipos.add(cboTipoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
 
         cboTipoPago.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
-        cboTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credito", "Contado", " " }));
+        cboTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credito", "Contado" }));
         PanelTipos.add(cboTipoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
         CampoJP.add(PanelTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 180));
@@ -163,7 +183,6 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
 
         String marca = "";
@@ -171,36 +190,39 @@ public class MainWindow extends javax.swing.JFrame {
         int puertas = 0;
         double cilindraje = 0.0;
         String regexNumero = "^-?\\d+(\\.\\d+)?$";
-        
+
         // se almacena la seleccion del combobox
         String tipoAuto = (String) cboTipoAuto.getSelectedItem();
         String tipoPago = (String) cboTipoPago.getSelectedItem();
-        
-        if(txtMarca.getText().isEmpty()){
+       
+
+        if (txtMarca.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Error: El Campo De La Marca No Puede Estar Vacio", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if(!(txtPrecio.getText().matches(regexNumero))){
+
+        if (!(txtPrecio.getText().matches(regexNumero))) {
             JOptionPane.showMessageDialog(this, "Error: El Precio Debe Contener Numeros Enteros o Decimales", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
-        } 
-        
-        if(tipoAuto == null || tipoPago == null){
-            JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar un Tipo De Auto o Tipo De Pago", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if (tipoAuto == null || tipoAuto.trim().isEmpty()
+                || tipoPago == null || tipoPago.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar un Tipo De Auto y Tipo De Pago válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        if(("Auto").equals(tipoAuto) && ("Credito").equals(tipoPago)){
+        
+
+        if (("Auto").equals(tipoAuto) && ("Credito").equals(tipoPago)) {
             
             marca = txtMarca.getText();
             precio = Double.parseDouble(txtPrecio.getText());
             puertas = Integer.parseInt(txtPuertas.getText());
-            
-            
+
             // Crear objeto
             Auto Auto1 = new Auto();
-            
+
             // set = Establecer o Asignar
             // get = Obtener o Llamar
             Auto1.setMarca(marca);
@@ -210,24 +232,54 @@ public class MainWindow extends javax.swing.JFrame {
             Auto1.Subtotal();
             Auto1.calcularIVA();
             Auto1.calcularTotal(tipoPago);
-            
-            
+
             txtHistorial.append(Auto1.mostrarInfo());
-        
+
         }
-       
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         int opcion = JOptionPane.showConfirmDialog(this, "Desea Salir Del Programa?", "Salida", JOptionPane.YES_NO_OPTION);
-        if(opcion == JOptionPane.YES_OPTION){
+        if (opcion == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cboTipoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoAutoActionPerformed
+      
+    }//GEN-LAST:event_cboTipoAutoActionPerformed
+
+    private void cboTipoAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboTipoAutoMouseClicked
+        
+    }//GEN-LAST:event_cboTipoAutoMouseClicked
+
+    private void cboTipoAutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cboTipoAutoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTipoAutoKeyPressed
+
+    private void cboTipoAutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTipoAutoItemStateChanged
+        if(evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
+             String seleccionComboBox = (String) cboTipoAuto.getSelectedItem();
+        
+            if("Auto".equals(seleccionComboBox)){
+            
+                txtPuertas.setEnabled(true); // activa txt puertas
+                txtCilindraje.setEnabled(false); // desactiva txtCilindraje
+                txtCilindraje.setEditable(false); // desactiva txtCilindraje
+                txtCilindraje.setText("");
+                
+            }
+            else if("Moto".equals(seleccionComboBox)){
+                
+                txtCilindraje.setEnabled(true); // activa txtCilindraje
+                txtPuertas.setEnabled(false); // desactiva txtPuertas
+                txtPuertas.setEditable(false); // desactiva txtPuertas
+                txtPuertas.setText("");
+            }
+        }
+    }//GEN-LAST:event_cboTipoAutoItemStateChanged
 
     /**
      * @param args the command line arguments
