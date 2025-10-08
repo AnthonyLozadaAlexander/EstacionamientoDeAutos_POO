@@ -9,6 +9,7 @@ package Aplicacion;
  * @author USUARIO
  */
 public class VehiculoPadre {
+    
     protected String marca;
     protected double precio;
     

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
  */
 public class Auto extends VehiculoPadre {
     private int puertas;
+    private String tipoPago;
     private final double IVA = 0.15;
     
     public Auto(){
@@ -35,6 +36,10 @@ public class Auto extends VehiculoPadre {
         return precio > 0;
     }
     
+    public void setTipoPago(String tipoPago){
+        this.tipoPago = this.tipoPago;
+    }
+    
     public void setMarca(String marca){
         this.marca = marca;
     }
@@ -51,11 +56,13 @@ public class Auto extends VehiculoPadre {
         }
     }
     
+    // Metodo para el SubTotal que por el momento es el precio ingresado.
     public double Subtotal(){
         return precio;
     }
     
-    public double calcularIVA(){
+    // Metodo para calcular el porcentaje del IVA 15%
+    public double calcularIVA(){ 
         return precio * IVA;
     }
     
@@ -68,6 +75,19 @@ public class Auto extends VehiculoPadre {
         return total;
         
     }
+    
+    public void CompraRealizada(){
+        JOptionPane.showMessageDialog(null, "Gracias Por Su Compra", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public String mostrarInfo(){
+        
+        CompraRealizada();
+        
+        return "Marca: " + marca + "\nPrecio: " + precio + "\nPuertas: " + puertas + "\nSubTotal: " + Subtotal() + "\nTotal: " + calcularTotal(tipoPago);
+        
+        
+    } 
     
 
 }

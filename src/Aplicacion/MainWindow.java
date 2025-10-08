@@ -40,8 +40,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtMarca = new javax.swing.JTextField();
-        cboMarca = new javax.swing.JComboBox<>();
-        cboTipoPrecio = new javax.swing.JComboBox<>();
+        cboTipoAuto = new javax.swing.JComboBox<>();
+        cboTipoPago = new javax.swing.JComboBox<>();
         autoJP = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtPuertas = new javax.swing.JTextField();
@@ -84,13 +84,13 @@ public class MainWindow extends javax.swing.JFrame {
         PanelTipos.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, -1, -1));
         PanelTipos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 130, -1));
 
-        cboMarca.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
-        cboMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Moto" }));
-        PanelTipos.add(cboMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
+        cboTipoAuto.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
+        cboTipoAuto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Moto", " " }));
+        PanelTipos.add(cboTipoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
 
-        cboTipoPrecio.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
-        cboTipoPrecio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Contado", "Credito" }));
-        PanelTipos.add(cboTipoPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
+        cboTipoPago.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
+        cboTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credito", "Contado", " " }));
+        PanelTipos.add(cboTipoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
         CampoJP.add(PanelTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 180));
 
@@ -162,7 +162,10 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+
         String marca = "";
         double precio = 0.0;
         int puertas = 0;
@@ -170,8 +173,8 @@ public class MainWindow extends javax.swing.JFrame {
         String regexNumero = "^-?\\d+(\\.\\d+)?$";
         
         // se almacena la seleccion del combobox
-        String tipoAuto = (String) cboMarca.getSelectedItem();
-        String tipoPago = (String) cboTipoPrecio.getSelectedItem();
+        String tipoAuto = (String) cboTipoAuto.getSelectedItem();
+        String tipoPago = (String) cboTipoPago.getSelectedItem();
         
         if(txtMarca.getText().isEmpty()){
             JOptionPane.showMessageDialog(this, "Error: El Campo De La Marca No Puede Estar Vacio", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -181,26 +184,40 @@ public class MainWindow extends javax.swing.JFrame {
         if(!(txtPrecio.getText().matches(regexNumero))){
             JOptionPane.showMessageDialog(this, "Error: El Precio Debe Contener Numeros Enteros o Decimales", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
+        } 
+        
+        if(tipoAuto == null || tipoPago == null){
+            JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar un Tipo De Auto o Tipo De Pago", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         
-        marca = txtMarca.getText();
-        precio = Double.parseDouble(txtPrecio.getText());
-        
-        
-        if(tipoPago.equals("Credito")){
-        if(tipoAuto.equals("Auto")){
-            // crear objeto
+        if(("Auto").equals(tipoAuto) && ("Credito").equals(tipoPago)){
+            
+            marca = txtMarca.getText();
+            precio = Double.parseDouble(txtPrecio.getText());
             puertas = Integer.parseInt(txtPuertas.getText());
             
+            
+            // Crear objeto
             Auto Auto1 = new Auto();
+            
+            // set = Establecer o Asignar
+            // get = Obtener o Llamar
             Auto1.setMarca(marca);
             Auto1.setPrecio(precio);
             Auto1.setPuertas(puertas);
-        }
-        }
-        else if(tipoPago.equals("Contado")){
+            Auto1.setTipoPago(tipoPago);
+            Auto1.Subtotal();
+            Auto1.calcularIVA();
+            Auto1.calcularTotal(tipoPago);
             
+            
+            txtHistorial.append(Auto1.mostrarInfo());
+        
         }
+       
+        
+        
         
         
     }//GEN-LAST:event_btnCalcularActionPerformed
@@ -256,8 +273,8 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnCalcular;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cboMarca;
-    private javax.swing.JComboBox<String> cboTipoPrecio;
+    private javax.swing.JComboBox<String> cboTipoAuto;
+    private javax.swing.JComboBox<String> cboTipoPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
