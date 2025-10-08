@@ -248,7 +248,20 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cboTipoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoAutoActionPerformed
-      
+      int indexTipoAuto = cboTipoAuto.getSelectedIndex();
+                
+      if(indexTipoAuto == 0){
+           txtPuertas.setEnabled(true); // activa txt puertas
+                txtCilindraje.setEnabled(false); // desactiva txtCilindraje
+                txtCilindraje.setEditable(false); // desactiva txtCilindraje
+                txtCilindraje.setText("");
+      }
+      else if(indexTipoAuto == 1){
+                txtCilindraje.setEnabled(true); // activa txtCilindraje
+                txtPuertas.setEnabled(false); // desactiva txtPuertas
+                txtPuertas.setEditable(false); // desactiva txtPuertas
+                txtPuertas.setText("");
+      }
     }//GEN-LAST:event_cboTipoAutoActionPerformed
 
     private void cboTipoAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboTipoAutoMouseClicked
@@ -260,6 +273,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_cboTipoAutoKeyPressed
 
     private void cboTipoAutoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboTipoAutoItemStateChanged
+        /*
         if(evt.getStateChange() == java.awt.event.ItemEvent.SELECTED){
              String seleccionComboBox = (String) cboTipoAuto.getSelectedItem();
         
@@ -279,6 +293,7 @@ public class MainWindow extends javax.swing.JFrame {
                 txtPuertas.setText("");
             }
         }
+        */
     }//GEN-LAST:event_cboTipoAutoItemStateChanged
 
     /**
