@@ -154,6 +154,11 @@ public class MainWindow extends javax.swing.JFrame {
 
         btnLimpiar.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
         CampoJP.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 450, 90, 30));
 
         FondoJP.add(CampoJP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 540, 530));
@@ -182,6 +187,24 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void Limpiar() {
+
+        int opcion = JOptionPane.showConfirmDialog(this, "Desea Limpiar El Formulario?", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            int confirmar = JOptionPane.showConfirmDialog(this, "Aviso: Se Borraran El Historial Del Formulario", "Aviso", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (confirmar == JOptionPane.YES_OPTION) {
+                txtCilindraje.setText("");
+                txtMarca.setText("");
+                txtPuertas.setText("");
+                txtPrecio.setText("");
+                txtHistorial.setText("");
+            }
+
+            return;
+        }
+
+    }
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
 
@@ -194,8 +217,8 @@ public class MainWindow extends javax.swing.JFrame {
         // se almacena la seleccion del combobox
         String tipoAuto = (String) cboTipoAuto.getSelectedItem();
         String tipoPago = (String) cboTipoPago.getSelectedItem();
-       
 
+        // Validaciones
         if (txtMarca.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Error: El Campo De La Marca No Puede Estar Vacio", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
@@ -206,19 +229,28 @@ public class MainWindow extends javax.swing.JFrame {
             return;
         }
 
-        if (tipoAuto == null || tipoAuto.trim().isEmpty()
-                || tipoPago == null || tipoPago.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Error: Debe Seleccionar un Tipo De Auto y Tipo De Pago válidos", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        
-
+        // Condicionales Para TipoAuto y TipoPago Seleccionado
         if (("Auto").equals(tipoAuto) && ("Credito").equals(tipoPago)) {
             
+            // Validaciones
+            if (txtPuertas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "ERROR: El Campo No Puede Estar Vacio", "ERROR", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             marca = txtMarca.getText();
             precio = Double.parseDouble(txtPrecio.getText());
             puertas = Integer.parseInt(txtPuertas.getText());
+
+            if (precio < 0) {
+                JOptionPane.showMessageDialog(this, "ERROR: Precio Ingresado Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if(puertas < 0){
+                JOptionPane.showMessageDialog(this, "ERROR: Puertas Ingresado Invalido: " + puertas,"Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             // Crear objeto
             Auto Auto1 = new Auto();
@@ -228,35 +260,123 @@ public class MainWindow extends javax.swing.JFrame {
             Auto1.setMarca(marca);
             Auto1.setPrecio(precio);
             Auto1.setPuertas(puertas);
-            Auto1.setTipoPago(tipoPago);
             Auto1.Subtotal();
             Auto1.calcularIVA();
             Auto1.calcularTotal(tipoPago);
 
-            txtHistorial.append(Auto1.mostrarInfo());
+            txtHistorial.append(Auto1.mostrarInfo(tipoPago));
+            
+            
+         // Condicionales Para TipoAuto y TipoPago Seleccionado
+        } else if (("Auto").equals(tipoAuto) && ("Contado").equals(tipoPago)) {
+
+            if (txtPuertas.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "ERROR: El Campo No Puede Estar Vacio", "ERROR", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            marca = txtMarca.getText();
+            precio = Double.parseDouble(txtPrecio.getText());
+            puertas = Integer.parseInt(txtPuertas.getText());
+
+            if (precio < 0) {
+                JOptionPane.showMessageDialog(this, "ERROR: Precio Ingresado Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if(puertas < 0){
+                JOptionPane.showMessageDialog(this, "ERROR: Puertas Ingresado Invalido: " + puertas,"Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Crear objeto
+            Auto Auto1 = new Auto();
+
+            // set = Establecer o Asignar
+            // get = Obtener o Llamar
+            Auto1.setMarca(marca);
+            Auto1.setPrecio(precio);
+            Auto1.setPuertas(puertas);
+            Auto1.Subtotal();
+            Auto1.calcularIVA();
+            Auto1.calcularTotal(tipoPago);
+
+            txtHistorial.append(Auto1.mostrarInfo(tipoPago));
 
         }
-        else if(("Auto").equals(tipoAuto) && ("Contado").equals(tipoPago)){
-            
+
+         // Condicionales Para TipoAuto y TipoPago Seleccionado
+        if (("Moto").equals(tipoAuto) && ("Credito").equals(tipoPago)) {
+
+            if (txtCilindraje.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "ERROR: El Campo No Puede Estar Vacio", "ERROR", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             marca = txtMarca.getText();
             precio = Double.parseDouble(txtPrecio.getText());
-            puertas = Integer.parseInt(txtPuertas.getText());
+            cilindraje = Double.parseDouble(txtCilindraje.getText());
+
+            if (precio < 0) {
+                JOptionPane.showMessageDialog(this, "ERROR: Precio Ingresado Invalido", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (cilindraje < 0) {
+                JOptionPane.showMessageDialog(this, "ERROR: Cilindraje Ingresado Invalido: " + cilindraje, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             // Crear objeto
-            Auto Auto1 = new Auto();
+            Moto moto1 = new Moto();
 
             // set = Establecer o Asignar
             // get = Obtener o Llamar
-            Auto1.setMarca(marca);
-            Auto1.setPrecio(precio);
-            Auto1.setPuertas(puertas);
-            Auto1.setTipoPago(tipoPago);
-            Auto1.Subtotal();
-            Auto1.calcularIVA();
-            Auto1.calcularTotal(tipoPago);
+            moto1.setMarca(marca);
+            moto1.setPrecio(precio);
+            moto1.setCilindraje(cilindraje);
+            moto1.SubTotal();
+            moto1.calcularIVA();
+            moto1.calcularTotal(tipoPago);
 
-            txtHistorial.append(Auto1.mostrarInfo());
+            txtHistorial.append(moto1.mostrarInfo(tipoPago));
+
             
+         // Condicionales Para TipoAuto y TipoPago Seleccionado
+        } else if (("Moto").equals(tipoAuto) && ("Contado").equals(tipoPago)) {
+
+            if (txtCilindraje.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "ERROR: El Campo No Puede Estar Vacio", "ERROR", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            marca = txtMarca.getText();
+            precio = Double.parseDouble(txtPrecio.getText());
+            cilindraje = Double.parseDouble(txtCilindraje.getText());
+
+            if (precio < 0) {
+                JOptionPane.showMessageDialog(this, "ERROR: Precio Ingresado Invalido: " + precio, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (cilindraje < 0) {
+                JOptionPane.showMessageDialog(this, "ERROR: Cilindraje Ingresado Invalido: " + cilindraje, "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Crear objeto
+            Moto moto1 = new Moto();
+
+            // set = Establecer o Asignar
+            // get = Obtener o Llamar
+            moto1.setMarca(marca);
+            moto1.setPrecio(precio);
+            moto1.setCilindraje(cilindraje);
+            moto1.SubTotal();
+            moto1.calcularIVA();
+            moto1.calcularTotal(tipoPago);
+
+            txtHistorial.append(moto1.mostrarInfo(tipoPago));
         }
 
 
@@ -270,24 +390,27 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void cboTipoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoAutoActionPerformed
-      int indexTipoAuto = cboTipoAuto.getSelectedIndex();
-                
-      if(indexTipoAuto == 1){
-           txtPuertas.setEnabled(true); // activa txt puertas
-                txtCilindraje.setEnabled(false); // desactiva txtCilindraje
-                txtCilindraje.setEditable(false); // desactiva txtCilindraje
-                txtCilindraje.setText("");
-      }
-      else if(indexTipoAuto == 2){
-                txtCilindraje.setEnabled(true); // activa txtCilindraje
-                txtPuertas.setEnabled(false); // desactiva txtPuertas
-                txtPuertas.setEditable(false); // desactiva txtPuertas
-                txtPuertas.setText("");
-      }
+        int indexTipoAuto = cboTipoAuto.getSelectedIndex();
+
+        if (indexTipoAuto == 1) {
+            txtPuertas.setEnabled(true); // activa txt puertas
+            txtPuertas.setEditable(true); // habilita la edicion
+            txtCilindraje.setEnabled(false); // desactiva txtCilindraje
+            txtCilindraje.setEditable(false); // desactiva txtCilindraje
+            txtCilindraje.setText("");
+        } else if (indexTipoAuto == 2) {
+            txtCilindraje.setEditable(true); // habilita la edicion
+            txtCilindraje.setEnabled(true); // activa txtCilindraje
+            txtPuertas.setEnabled(false); // desactiva txtPuertas
+            txtPuertas.setEditable(false); // desactiva txtPuertas
+            txtPuertas.setText("");
+        }
+
+
     }//GEN-LAST:event_cboTipoAutoActionPerformed
 
     private void cboTipoAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboTipoAutoMouseClicked
-        
+
     }//GEN-LAST:event_cboTipoAutoMouseClicked
 
     private void cboTipoAutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cboTipoAutoKeyPressed
@@ -315,8 +438,12 @@ public class MainWindow extends javax.swing.JFrame {
                 txtPuertas.setText("");
             }
         }
-        */
+         */
     }//GEN-LAST:event_cboTipoAutoItemStateChanged
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        Limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
