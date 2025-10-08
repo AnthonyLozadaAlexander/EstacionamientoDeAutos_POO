@@ -22,16 +22,9 @@ public class VehiculoPadre {
         this.precio = precio;
     }
     
-    public void setPrecio(double precio){
-        this.precio = precio;
-    }
-    
     public void setMarca(String marca){
         this.marca = marca;
     }
     
-    public String mostrarInfo(){
-        return "Marca; " + marca + "\n" + "Precio: " + precio + "\n";
-    }
-    
+
 }
