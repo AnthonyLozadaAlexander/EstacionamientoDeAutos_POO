@@ -85,7 +85,7 @@ public class MainWindow extends javax.swing.JFrame {
         PanelTipos.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 60, 130, -1));
 
         cboTipoAuto.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
-        cboTipoAuto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Auto", "Moto" }));
+        cboTipoAuto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Auto", "Moto" }));
         cboTipoAuto.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboTipoAutoItemStateChanged(evt);
@@ -109,7 +109,7 @@ public class MainWindow extends javax.swing.JFrame {
         PanelTipos.add(cboTipoAuto, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, -1, -1));
 
         cboTipoPago.setFont(new java.awt.Font("CaskaydiaMono NF SemiBold", 0, 14)); // NOI18N
-        cboTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credito", "Contado" }));
+        cboTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Credito", "Contado" }));
         PanelTipos.add(cboTipoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
 
         CampoJP.add(PanelTipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 180));
@@ -236,6 +236,28 @@ public class MainWindow extends javax.swing.JFrame {
             txtHistorial.append(Auto1.mostrarInfo());
 
         }
+        else if(("Auto").equals(tipoAuto) && ("Contado").equals(tipoPago)){
+            
+            marca = txtMarca.getText();
+            precio = Double.parseDouble(txtPrecio.getText());
+            puertas = Integer.parseInt(txtPuertas.getText());
+
+            // Crear objeto
+            Auto Auto1 = new Auto();
+
+            // set = Establecer o Asignar
+            // get = Obtener o Llamar
+            Auto1.setMarca(marca);
+            Auto1.setPrecio(precio);
+            Auto1.setPuertas(puertas);
+            Auto1.setTipoPago(tipoPago);
+            Auto1.Subtotal();
+            Auto1.calcularIVA();
+            Auto1.calcularTotal(tipoPago);
+
+            txtHistorial.append(Auto1.mostrarInfo());
+            
+        }
 
 
     }//GEN-LAST:event_btnCalcularActionPerformed
@@ -250,13 +272,13 @@ public class MainWindow extends javax.swing.JFrame {
     private void cboTipoAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoAutoActionPerformed
       int indexTipoAuto = cboTipoAuto.getSelectedIndex();
                 
-      if(indexTipoAuto == 0){
+      if(indexTipoAuto == 1){
            txtPuertas.setEnabled(true); // activa txt puertas
                 txtCilindraje.setEnabled(false); // desactiva txtCilindraje
                 txtCilindraje.setEditable(false); // desactiva txtCilindraje
                 txtCilindraje.setText("");
       }
-      else if(indexTipoAuto == 1){
+      else if(indexTipoAuto == 2){
                 txtCilindraje.setEnabled(true); // activa txtCilindraje
                 txtPuertas.setEnabled(false); // desactiva txtPuertas
                 txtPuertas.setEditable(false); // desactiva txtPuertas
